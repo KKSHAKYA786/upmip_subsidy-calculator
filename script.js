@@ -7,6 +7,8 @@ maximumFractionDigits:2
 
 let allData={
 
+drip:{
+
 "1.2x0.6":{
 
 0.2:36151,
@@ -275,7 +277,117 @@ let allData={
 
 }
 
-};function calculate(){
+},
+
+mini:{"10x10":{
+
+0.4:52548,
+0.5:61832,
+0.6:71117,
+0.7:80401,
+0.8:89685,
+0.9:98970,
+1.0:108254,
+1.1:117757,
+1.2:127259,
+1.3:136762,
+1.4:146265,
+1.5:155768,
+1.6:165270,
+1.7:174773,
+1.8:184276,
+1.9:193778,
+2.0:203281,
+2.1:213821,
+2.2:224362,
+2.3:234902,
+2.4:245443,
+2.5:255983,
+2.6:266523,
+2.7:277064,
+2.8:287604,
+2.9:298145,
+3.0:308685,
+3.1:317549,
+3.2:326412,
+3.3:335276,
+3.4:344140,
+3.5:353004,
+3.6:361867,
+3.7:370731,
+3.8:379595,
+3.9:388458,
+4.0:397322,
+4.1:406262,
+4.2:415202,
+4.3:424142,
+4.4:433082,
+4.5:442022,
+4.6:450961,
+4.7:459901,
+4.8:468841,
+4.9:477781,
+5.0:486721
+
+},
+
+"8x8":{
+
+0.4:54657,
+0.5:65457,
+0.6:76256,
+0.7:87056,
+0.8:97855,
+0.9:108655,
+1.0:119454,
+1.1:129120,
+1.2:138787,
+1.3:148453,
+1.4:158120,
+1.5:167786,
+1.6:177452,
+1.7:187119,
+1.8:196785,
+1.9:206452,
+2.0:216118,
+2.1:227964,
+2.2:239809,
+2.3:251655,
+2.4:263501,
+2.5:275347,
+2.6:287192,
+2.7:299038,
+2.8:310884,
+2.9:322729,
+3.0:334575,
+3.1:344821,
+3.2:355067,
+3.3:365313,
+3.4:375559,
+3.5:385806,
+3.6:396052,
+3.7:406298,
+3.8:416544,
+3.9:426790,
+4.0:437036,
+4.1:447370,
+4.2:457704,
+4.3:468037,
+4.4:478371,
+4.5:488705,
+4.6:499039,
+4.7:509373,
+4.8:519706,
+4.9:530040,
+5.0:540374
+
+}
+
+}
+
+};
+
+function calculate(){
 
 let spacing=document.getElementById("spacing").value;
 
@@ -291,17 +403,20 @@ alert("Area should be between 0.2 and 5 hectare");
 return;
 }
 
-let data=allData[spacing];
+let system=document.getElementById("system").value;
+
+let data=allData[system][spacing];
 
 let unitCost;
 
 let area1=parseFloat(area.toFixed(1));
 
-if(data[area1]!=undefined){
+if(Math.abs(area*10-Math.round(area*10))<0.0001){
 
 unitCost=data[area1];
 
 }
+
 else{
 
 let lower=Math.floor(area*10)/10;
@@ -384,6 +499,73 @@ encodeURIComponent(window.resultText)
 else{
 
 alert("Please calculate first.");
+
+}
+
+}
+function changeSpacing(){
+
+let system =
+document.getElementById("system").value;
+
+let spacing =
+document.getElementById("spacing");
+
+if(system=="drip"){
+
+spacing.innerHTML=`
+
+<option value="1.2x0.6">
+
+1.2 × 0.6
+
+</option>
+
+<option value="1.5x0.6">
+
+1.5 × 0.6
+
+</option>
+
+<option value="1.8x0.6">
+
+1.8 × 0.6
+
+</option>
+
+<option value="2.5x0.6">
+
+2.5 × 0.6
+
+</option>
+
+<option value="1.5x1.5">
+
+1.5 × 1.5
+
+</option>
+
+`;
+
+}
+
+else{
+
+spacing.innerHTML=`
+
+<option value="10x10">
+
+10 × 10 Meter
+
+</option>
+
+<option value="8x8">
+
+8 × 8 Meter
+
+</option>
+
+`;
 
 }
 
