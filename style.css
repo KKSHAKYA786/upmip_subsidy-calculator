@@ -109,3 +109,30 @@ font-size:17px;
 }
 
 }
+.dark-mode{
+    background-color:#1e1e1e;
+    color:white;
+}
+
+.dark-mode .container{
+    background-color:#2c2c2c;
+}
+
+.dark-mode input,
+.dark-mode select{
+    background-color:#333;
+    color:white;
+}
+
+.dark-mode #result{
+    background-color:#333;
+    color:white;
+}
+
+.dark-mode footer{
+    color:white;
+}
+
+.dark-mode a{
+    color:#90caf9;
+}
