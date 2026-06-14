@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kkshakya786.github.io/upmip_subsidy-calculator/sitemap.xml
