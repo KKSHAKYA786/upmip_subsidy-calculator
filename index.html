@@ -89,26 +89,30 @@ href="style.css">
 
 <h1>
 
-UPMIP Subsidy Calculator
+Subsidy Calculator India
 
 </h1>
-
-<p class="author">
-
-Designed by
-
-<strong>
-
-Er. Kaushal Shakya
-
-</strong>
-
-(Agril. Engineer)
-
+<p class="subtitle">
+    Micro Irrigation Subsidy Calculator for Uttar Pradesh & Rajasthan
 </p>
-<div class="coming-soon-banner">
-🚀 Rajasthan Subsidy Calculator • Coming Soon • 🚀
+<div class="state-section">
+    <h2>Select State</h2>
+
+    <div class="state-cards" id="stateCards">
+
+<div class="state-card selected" role="button" tabindex="0" data-state="up" aria-pressed="true" onclick="selectState('up')">
+    <h3>Uttar Pradesh</h3>
 </div>
+
+       <div class="state-card" role="button" tabindex="0" data-state="rajasthan" aria-pressed="false" onclick="selectState('rajasthan')">
+    <h3>Rajasthan</h3>
+</div>
+
+</div>
+<p class="selected-state" id="selectedStateText">Selected State: Uttar Pradesh</p>
+</div>
+
+
 <label>
 
 System Type
@@ -188,6 +192,8 @@ Calculate
 
 </button>
 
+<div class="state-message" id="stateMessage" hidden></div>
+
 <div class="result">
 
 <h2 id="unitCost"></h2>
@@ -255,24 +261,11 @@ Er. Kaushal Shakya
 (Agril. Engineer)
 <hr>
 <div class="visitor-counter">
-    👥 Total Visitors<br>
-    <img src="https://www.hitwebcounter.com/counter/counter.php?page=21504118&style=0005&nbdigits=7&type=page"
-         alt="Visitor Counter"
-         style="border:0;max-width:100%;height:auto;">
+    👥 Total Visitors<br><br>
+
+    <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://kkshakya786.github.io/UPMIP-SUBSIDY-2.0/&count_bg=%23009833&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Visitors&edge_flat=false" alt="Visitor Counter">
 </div>
-<p>
-<a href="about.html">About Us</a> |
-<a href="contact.html">Contact Us</a> |
-<a href="privacy-policy.html">Privacy Policy</a>
-</p>
 </footer>
-
-</div>
-
-<script src="script.js">
-
-</script>
-
+<script src="script.js"></script>
 </body>
-
 </html>
