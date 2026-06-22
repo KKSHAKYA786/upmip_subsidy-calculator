@@ -387,9 +387,122 @@ mini:{"10x10":{
 
 };
 
+let selectedState = "up";
+
+const stateSubsidyConfig = {
+up: {
+name: "Uttar Pradesh",
+calculatorTitle: "Uttar Pradesh Subsidy Calculator",
+data: allData
+},
+rajasthan: {
+name: "Rajasthan",
+calculatorTitle: "Rajasthan Subsidy Calculator",
+data: null,
+comingSoonMessage: "🚧 Rajasthan subsidy data is under development. Coming soon."
+}
+};
+
+function getSelectedStateConfig(){
+return stateSubsidyConfig[selectedState] || stateSubsidyConfig.up;
+}
+
+function updateSelectedStateUI(){
+let currentState=getSelectedStateConfig();
+let stateText=document.getElementById("selectedStateText");
+
+if(stateText){
+stateText.innerHTML="Selected State: "+currentState.name;
+}
+
+document.querySelectorAll(".state-card").forEach(function(card){
+let isSelected=card.getAttribute("data-state")===selectedState;
+card.classList.toggle("selected",isSelected);
+card.setAttribute("aria-pressed",isSelected ? "true" : "false");
+});
+}
+
+function clearResult(){
+["unitCost","subsidy90","share10","subsidy80","share20"].forEach(function(id){
+let element=document.getElementById(id);
+
+if(element){
+element.innerHTML="";
+}
+});
+
+window.resultText="";
+document.body.removeAttribute("data-result-text");
+}
+
+function showResultSection(){
+let result=document.querySelector(".result");
+let message=document.getElementById("stateMessage");
+
+if(result){
+result.hidden=false;
+}
+
+if(message){
+message.hidden=true;
+message.innerHTML="";
+}
+}
+
+function showStateMessage(messageText){
+let result=document.querySelector(".result");
+let message=document.getElementById("stateMessage");
+
+if(result){
+result.hidden=true;
+}
+
+if(message){
+message.innerHTML=messageText;
+message.hidden=false;
+}
+}
+
+function selectState(state) {
+if(!stateSubsidyConfig[state]){
+return;
+}
+
+selectedState = state;
+updateSelectedStateUI();
+clearResult();
+
+let currentState=getSelectedStateConfig();
+
+if(!currentState.data){
+showStateMessage(currentState.comingSoonMessage);
+}
+else{
+showResultSection();
+}
+}
+
+function setupStateCards(){
+document.querySelectorAll(".state-card").forEach(function(card){
+card.addEventListener("keydown",function(event){
+if(event.key==="Enter" || event.key===" "){
+event.preventDefault();
+selectState(card.getAttribute("data-state"));
+}
+});
+});
+}
+
 function calculate(){
 
 let spacing=document.getElementById("spacing").value;
+
+let currentState=getSelectedStateConfig();
+if(!currentState.data){
+clearResult();
+showStateMessage(currentState.comingSoonMessage);
+return;
+}
 
 let area=parseFloat(document.getElementById("area").value);
 
@@ -405,7 +518,7 @@ return;
 
 let system=document.getElementById("system").value;
 
-let data=allData[system][spacing];
+let data=currentState.data[system][spacing];
 
 let unitCost;
 
@@ -458,7 +571,8 @@ document.getElementById("share20").innerHTML=
 "Farmer Share (20%) : ₹"+formatIndianNumber(share20);
 
 window.resultText=
-"UPMIP Subsidy Calculator\n\n"+
+"Subsidy Calculator India\n"+
+"State : "+currentState.name+"\n\n"+
 "Spacing : "+spacing+"\n"+
 "Area : "+area+" Hectare\n\n"+
 "Unit Cost : ₹"+formatIndianNumber(unitCost)+"\n\n"+
@@ -467,13 +581,17 @@ window.resultText=
 "80% Subsidy : ₹"+formatIndianNumber(subsidy80)+"\n"+
 "Farmer Share (20%) : ₹"+formatIndianNumber(share20);
 
+document.body.setAttribute("data-result-text",window.resultText);
+
 }
 
 function copyResult(){
 
-if(window.resultText){
+let resultText=document.body.getAttribute("data-result-text") || window.resultText;
 
-navigator.clipboard.writeText(window.resultText);
+if(resultText){
+
+navigator.clipboard.writeText(resultText);
 
 alert("Result copied successfully.");
 
@@ -488,11 +606,13 @@ alert("Please calculate first.");
 
 function shareWhatsApp(){
 
-if(window.resultText){
+let resultText=document.body.getAttribute("data-result-text") || window.resultText;
+
+if(resultText){
 
 window.open(
 "https://wa.me/?text="+
-encodeURIComponent(window.resultText)
+encodeURIComponent(resultText)
 );
 
 }
@@ -601,5 +721,8 @@ document.body.classList.add("dark-mode");
 document.getElementById("darkModeBtn").innerHTML="☀️ Light Mode";
 
 }
+
+updateSelectedStateUI();
+setupStateCards();
 
 }
